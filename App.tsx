@@ -10,13 +10,13 @@ import { StudioIAView } from './views/StudioIAView';
 import { RewardsView } from './views/RewardsView';
 import { LiveConsultancyView } from './views/LiveConsultancyView';
 import { LoginView } from './views/LoginView';
-import { ViewType } from './types';
+import { ViewType, User } from './types';
 
 const App: React.FC = () => {
   const [currentView, setCurrentView] = useState<ViewType>('dashboard');
   const [darkMode, setDarkMode] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [currentUser, setCurrentUser] = useState('SMAYK HAJE');
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
 
   const [userXp, setUserXp] = useState(3250);
   const [userLevel, setUserLevel] = useState(4);
@@ -29,8 +29,8 @@ const App: React.FC = () => {
     }
   }, [darkMode]);
 
-  const handleLogin = (userName: string) => {
-    setCurrentUser(userName);
+  const handleLogin = (user: User) => {
+    setCurrentUser(user);
     setIsAuthenticated(true);
   };
 
@@ -40,12 +40,24 @@ const App: React.FC = () => {
   };
 
   const addXp = (amount: number) => {
-    setUserXp(prev => {
-      const newXp = Math.max(0, prev + amount);
+    setUserXp(prevXp => {
+      const newXp = Math.max(0, prevXp + amount);
       const nextLevelThreshold = userLevel * 5000;
+      let newLevel = userLevel;
+
       if (newXp >= nextLevelThreshold) {
-        setUserLevel(l => l + 1);
+        newLevel = userLevel + 1;
+        setUserLevel(newLevel);
       }
+
+      if (currentUser) {
+        setCurrentUser({
+          ...currentUser,
+          xp: newXp,
+          level: newLevel
+        });
+      }
+
       return newXp;
     });
   };
@@ -72,7 +84,7 @@ const App: React.FC = () => {
       case 'training': return <TrainingView {...props} />;
       case 'rewards': return <RewardsView {...props} />;
       case 'users': return <UsersView />;
-      case 'metrics': return <MetricsView />;
+      case 'metrics': return <MetricsView user={currentUser} />;
       case 'studio-ia': return <StudioIAView />;
       case 'live-consultancy': return <LiveConsultancyView />;
       default: return <DashboardView {...props} />;
@@ -88,8 +100,7 @@ const App: React.FC = () => {
       <Sidebar
         currentView={currentView}
         setView={setCurrentView}
-        userXp={userXp}
-        userLevel={userLevel}
+        user={currentUser}
         onLogout={handleLogout}
       />
 
@@ -116,15 +127,17 @@ const App: React.FC = () => {
 
             <div className="flex items-center space-x-3 pl-6 border-l border-slate-200 dark:border-slate-800">
               <div className="text-right hidden sm:block">
-                <p className="text-sm font-black dark:text-white tracking-tight uppercase">{currentUser}</p>
-                <p className="text-[10px] text-primary font-black uppercase tracking-widest">Master Consultant</p>
+                <p className="text-sm font-black dark:text-white tracking-tight uppercase">{currentUser?.name}</p>
+                <p className="text-[10px] text-primary font-black uppercase tracking-widest">
+                  {currentUser?.role === 'ESPECIALISTA' ? 'Especialista Haje' : currentUser?.role === 'GESTOR' ? 'Gestor da Unidade' : 'Talento Operacional'}
+                </p>
               </div>
               <div
                 className="w-12 h-12 rounded-2xl bg-gradient-to-br from-primary to-orange-600 p-[2px] cursor-pointer group hover:scale-105 transition-transform"
                 onClick={() => setCurrentView('users')}
               >
                 <div className="w-full h-full rounded-[14px] overflow-hidden border-2 border-white dark:border-background-dark">
-                  <img src="https://picsum.photos/seed/smayk/100/100" className="w-full h-full object-cover" alt="Avatar" />
+                  <img src={currentUser?.avatar || "https://picsum.photos/seed/smayk/100/100"} className="w-full h-full object-cover" alt="Avatar" />
                 </div>
               </div>
             </div>

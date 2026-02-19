@@ -1,23 +1,34 @@
 
-export type ViewType = 
-  | 'dashboard' 
-  | 'support' 
-  | 'training' 
-  | 'rewards' 
-  | 'users' 
-  | 'metrics' 
+export type ViewType =
+  | 'dashboard'
+  | 'support'
+  | 'training'
+  | 'rewards'
+  | 'users'
+  | 'metrics'
   | 'studio-ia'
   | 'live-consultancy';
+
+export type UserRole = 'ESPECIALISTA' | 'GESTOR' | 'FUNCIONARIO';
 
 export interface User {
   id: string;
   name: string;
   email: string;
-  role: string;
+  role: UserRole;
   avatar: string;
   level: number;
   xp: number;
   status: 'active' | 'inactive';
+  branch?: string; // Filial
+  registrationDate?: string;
+  averageAccessTime?: string; // Tempo médio de acesso
+  accessStats?: {
+    daily: number;
+    weekly: number;
+    monthly: number;
+  };
+  storeId?: string; // Para vincular Gestor à sua loja
 }
 
 export interface Ticket {

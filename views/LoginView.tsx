@@ -1,8 +1,10 @@
 
 import React, { useState } from 'react';
 
+import { User, UserRole } from '../types';
+
 interface LoginViewProps {
-    onLogin: (user: string) => void;
+    onLogin: (user: User) => void;
 }
 
 export const LoginView: React.FC<LoginViewProps> = ({ onLogin }) => {
@@ -13,9 +15,34 @@ export const LoginView: React.FC<LoginViewProps> = ({ onLogin }) => {
     const handleLogin = (e: React.FormEvent) => {
         e.preventDefault();
         setLoading(true);
+
         // Simulação de delay de autenticação
         setTimeout(() => {
-            onLogin(email.split('@')[0].toUpperCase());
+            const name = email.split('@')[0].toUpperCase();
+            let role: UserRole = 'FUNCIONARIO';
+
+            if (email.includes('especialista')) role = 'ESPECIALISTA';
+            else if (email.includes('gestor')) role = 'GESTOR';
+
+            onLogin({
+                id: Math.random().toString(36).substr(2, 9),
+                name: name,
+                email: email,
+                role: role,
+                avatar: `https://picsum.photos/seed/${name}/100/100`,
+                level: role === 'ESPECIALISTA' ? 10 : (role === 'GESTOR' ? 5 : 4),
+                xp: role === 'ESPECIALISTA' ? 50000 : (role === 'GESTOR' ? 8000 : 3250),
+                status: 'active',
+                branch: 'Matriz São Paulo',
+                registrationDate: '2025-01-15',
+                averageAccessTime: '45min',
+                accessStats: {
+                    daily: 4,
+                    weekly: 28,
+                    monthly: 120
+                },
+                storeId: 'store_001'
+            });
             setLoading(false);
         }, 1200);
     };

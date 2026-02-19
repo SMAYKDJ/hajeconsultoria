@@ -1,26 +1,29 @@
 
 import React from 'react';
-import { ViewType } from '../types';
+import { ViewType, User } from '../types';
 
 interface SidebarProps {
   currentView: ViewType;
   setView: (view: ViewType) => void;
-  userXp?: number;
-  userLevel?: number;
+  user: User | null;
   onLogout: () => void;
 }
 
-export const Sidebar: React.FC<SidebarProps> = ({ currentView, setView, userXp, userLevel, onLogout }) => {
-  const navItems = [
-    { id: 'dashboard', label: 'Dashboard', icon: 'dashboard' },
-    { id: 'live-consultancy', label: 'Consultoria Live', icon: 'record_voice_over', badge: 'NOVO' },
-    { id: 'studio-ia', label: 'Studio Neural', icon: 'auto_awesome' },
-    { id: 'training', label: 'Academia', icon: 'school' },
-    { id: 'support', label: 'Suporte', icon: 'support_agent' },
-    { id: 'users', label: 'Talentos', icon: 'group' },
-    { id: 'metrics', label: 'Métricas', icon: 'analytics' },
-    { id: 'rewards', label: 'Conquistas', icon: 'military_tech' },
+export const Sidebar: React.FC<SidebarProps> = ({ currentView, setView, user, onLogout }) => {
+  const allNavItems = [
+    { id: 'dashboard', label: 'Dashboard', icon: 'dashboard', roles: ['ESPECIALISTA', 'GESTOR', 'FUNCIONARIO'] },
+    { id: 'live-consultancy', label: 'Consultoria Live', icon: 'record_voice_over', badge: 'NOVO', roles: ['ESPECIALISTA'] },
+    { id: 'studio-ia', label: 'Studio Neural', icon: 'auto_awesome', roles: ['ESPECIALISTA'] },
+    { id: 'training', label: 'Academia', icon: 'school', roles: ['ESPECIALISTA', 'GESTOR', 'FUNCIONARIO'] },
+    { id: 'support', label: 'Suporte', icon: 'support_agent', roles: ['ESPECIALISTA', 'GESTOR', 'FUNCIONARIO'] },
+    { id: 'users', label: 'Talentos', icon: 'group', roles: ['ESPECIALISTA', 'GESTOR'] },
+    { id: 'metrics', label: 'Métricas', icon: 'analytics', roles: ['ESPECIALISTA', 'GESTOR'] },
+    { id: 'rewards', label: 'Conquistas', icon: 'military_tech', roles: ['ESPECIALISTA', 'GESTOR', 'FUNCIONARIO'] },
   ];
+
+  const filteredNavItems = allNavItems.filter(item =>
+    user && item.roles.includes(user.role)
+  );
 
   return (
     <aside className="w-64 border-r border-slate-200 dark:border-slate-800 flex flex-col bg-white dark:bg-background-dark z-40 shrink-0">
@@ -33,7 +36,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentView, setView, userXp, 
         </div>
 
         <nav className="w-full space-y-1.5">
-          {navItems.map((item) => (
+          {filteredNavItems.map((item) => (
             <button
               key={item.id}
               onClick={() => setView(item.id as ViewType)}
@@ -59,14 +62,14 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentView, setView, userXp, 
       </div>
 
       <div className="mt-auto p-6 space-y-3">
-        {userXp !== undefined && (
+        {user && (
           <div className="p-4 bg-slate-50 dark:bg-surface-dark rounded-2xl border border-slate-100 dark:border-slate-800 mb-2">
             <div className="flex justify-between items-center mb-2">
-              <span className="text-[10px] font-black text-slate-400 uppercase">Nível {userLevel}</span>
-              <span className="text-[10px] font-black text-primary">{userXp} XP</span>
+              <span className="text-[10px] font-black text-slate-400 uppercase">Nível {user.level}</span>
+              <span className="text-[10px] font-black text-primary">{user.xp} XP</span>
             </div>
             <div className="h-1 w-full bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
-              <div className="h-full bg-primary" style={{ width: `${(userXp % 5000) / 50}%` }}></div>
+              <div className="h-full bg-primary" style={{ width: `${(user.xp % 5000) / 50}%` }}></div>
             </div>
           </div>
         )}

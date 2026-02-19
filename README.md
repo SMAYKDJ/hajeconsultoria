@@ -6,7 +6,7 @@
 
 This contains everything you need to run your app locally.
 
-View your app in AI Studio: https://ai.studio/apps/drive/1PdQgirOl-_K-luERVh4IO5q5rzdnw2a0
+View your app: https://hajeconsultoria.vercel.app
 
 ## Run Locally
 
