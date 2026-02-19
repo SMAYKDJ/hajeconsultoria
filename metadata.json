@@ -1,0 +1,9 @@
+
+{
+  "name": "Haje Consultoria - Platform",
+  "description": "Uma plataforma completa de consultoria, treinamento, suporte e inteligência de negócios com integração ao Gemini AI e Consultoria Live.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
