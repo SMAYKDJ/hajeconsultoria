@@ -18,11 +18,23 @@ export const LoginView: React.FC<LoginViewProps> = ({ onLogin }) => {
 
         // Simulação de delay de autenticação
         setTimeout(() => {
+            if (password !== '123') {
+                alert('Chave de acesso inválida para este usuário demo.');
+                setLoading(false);
+                return;
+            }
+
             const name = email.split('@')[0].toUpperCase();
             let role: UserRole = 'FUNCIONARIO';
 
-            if (email.includes('especialista')) role = 'ESPECIALISTA';
-            else if (email.includes('gestor')) role = 'GESTOR';
+            if (email === 'especialista@haje.com') role = 'ESPECIALISTA';
+            else if (email === 'gestor@gmail.com') role = 'GESTOR';
+            else if (email === 'aluno@gmail.com') role = 'FUNCIONARIO';
+            else {
+                alert('Usuário não cadastrado na base demo.');
+                setLoading(false);
+                return;
+            }
 
             onLogin({
                 id: Math.random().toString(36).substr(2, 9),
@@ -33,7 +45,7 @@ export const LoginView: React.FC<LoginViewProps> = ({ onLogin }) => {
                 level: role === 'ESPECIALISTA' ? 10 : (role === 'GESTOR' ? 5 : 4),
                 xp: role === 'ESPECIALISTA' ? 50000 : (role === 'GESTOR' ? 8000 : 3250),
                 status: 'active',
-                branch: 'Matriz São Paulo',
+                branch: role === 'GESTOR' ? 'Matriz São Paulo' : 'Setor Geral',
                 registrationDate: '2025-01-15',
                 averageAccessTime: '45min',
                 accessStats: {
