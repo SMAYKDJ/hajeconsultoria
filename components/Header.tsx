@@ -1,6 +1,7 @@
 import React from 'react';
 import { ViewType, User, Notification } from '../types';
 import { NotificationCenter } from './NotificationCenter';
+import { ProgressBar } from './ProgressBar';
 
 interface HeaderProps {
     currentView: ViewType;
