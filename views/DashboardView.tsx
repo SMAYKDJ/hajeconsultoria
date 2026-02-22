@@ -1,6 +1,6 @@
-
 import React from 'react';
 import { ViewType } from '../types';
+import { ProgressBar } from '../components/ProgressBar';
 
 interface DashboardProps {
   setView: (view: ViewType) => void;
@@ -37,21 +37,21 @@ export const DashboardView: React.FC<DashboardProps> = ({ setView, userXp }) => 
           <span className="text-sm font-black text-slate-400 uppercase tracking-widest">Ações Rápidas</span>
         </div>
         <div className="flex flex-wrap items-center gap-3">
-          <button 
+          <button
             onClick={() => setView('users')}
             className="bg-primary text-white px-4 py-2 rounded-lg font-bold text-sm uppercase tracking-tight shadow-sm hover:bg-orange-600 transition flex items-center space-x-2"
           >
             <span className="material-icons-outlined text-base">person_add</span>
             <span>Novo Usuário</span>
           </button>
-          <button 
+          <button
             onClick={() => setView('support')}
             className="bg-primary text-white px-4 py-2 rounded-lg font-bold text-sm uppercase tracking-tight shadow-sm hover:bg-orange-600 transition flex items-center space-x-2"
           >
             <span className="material-icons-outlined text-base">confirmation_number</span>
             <span>Novo Chamado</span>
           </button>
-          <button 
+          <button
             onClick={() => setView('metrics')}
             className="bg-primary text-white px-4 py-2 rounded-lg font-bold text-sm uppercase tracking-tight shadow-sm hover:bg-orange-600 transition flex items-center space-x-2"
           >
@@ -87,7 +87,7 @@ export const DashboardView: React.FC<DashboardProps> = ({ setView, userXp }) => 
                 <span className="material-icons-outlined text-lg text-primary">{rec.icon}</span>
                 <p className="text-sm font-bold dark:text-white leading-tight">{rec.text}</p>
               </div>
-              <button 
+              <button
                 onClick={() => setView(rec.navigateTo as ViewType)}
                 className="text-sm font-black text-primary hover:underline uppercase text-right"
               >
@@ -119,21 +119,21 @@ export const DashboardView: React.FC<DashboardProps> = ({ setView, userXp }) => 
             </div>
           </div>
           <div className="mt-8 pt-6 border-t border-slate-100 dark:border-slate-800">
-             <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-3">
-                  <div className="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden border-2 border-primary/20">
-                    <img src="https://picsum.photos/seed/vitor/100/100" className="w-full h-full object-cover" alt="Especialista" />
-                  </div>
-                  <div>
-                    <p className="text-sm font-bold uppercase dark:text-white">Victor Consultor</p>
-                    <p className="text-xs text-slate-400 font-bold uppercase">Meta Batida</p>
-                  </div>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-3">
+                <div className="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden border-2 border-primary/20">
+                  <img src="https://picsum.photos/seed/vitor/100/100" className="w-full h-full object-cover" alt="Especialista" />
                 </div>
-                <div className="text-right">
-                  <p className="text-sm font-black text-primary">98.5%</p>
-                  <p className="text-xs text-slate-400 font-bold uppercase">CSAT</p>
+                <div>
+                  <p className="text-sm font-bold uppercase dark:text-white">Victor Consultor</p>
+                  <p className="text-xs text-slate-400 font-bold uppercase">Meta Batida</p>
                 </div>
-             </div>
+              </div>
+              <div className="text-right">
+                <p className="text-sm font-black text-primary">98.5%</p>
+                <p className="text-xs text-slate-400 font-bold uppercase">CSAT</p>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -147,38 +147,34 @@ export const DashboardView: React.FC<DashboardProps> = ({ setView, userXp }) => 
             <span className="text-xs font-bold text-slate-400">Meta Semanal: 15/12</span>
           </div>
           <div className="space-y-4">
-             <div>
-                <div className="flex justify-between text-xs font-bold mb-1.5 uppercase">
-                   <span className="text-slate-500">Módulo Financeiro</span>
-                   <span className="text-primary">82%</span>
-                </div>
-                <div className="h-2 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
-                   <div className="h-full bg-primary" style={{width: '82%'}}></div>
-                </div>
-             </div>
-             <div>
-                <div className="flex justify-between text-xs font-bold mb-1.5 uppercase">
-                   <span className="text-slate-500">Gestão Operacional</span>
-                   <span className="text-primary">64%</span>
-                </div>
-                <div className="h-2 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
-                   <div className="h-full bg-primary" style={{width: '64%'}}></div>
-                </div>
-             </div>
-             <button 
-                onClick={() => setView('training')}
-                className="w-full bg-primary/5 dark:bg-primary/10 border border-primary/20 rounded-xl p-4 flex items-center justify-between mt-6 hover:bg-primary/10 transition group"
-             >
-                <div>
-                   <p className="text-xs font-black text-primary uppercase tracking-widest text-left">Resumo Consolidado</p>
-                   <p className="text-lg font-display font-black dark:text-white">Acessar Academia Haje</p>
-                </div>
-                <span className="material-icons-outlined text-primary group-hover:translate-x-1 transition">arrow_forward</span>
-             </button>
+            <div>
+              <div className="flex justify-between text-xs font-bold mb-1.5 uppercase">
+                <span className="text-slate-500">Módulo Financeiro</span>
+                <span className="text-primary">82%</span>
+              </div>
+              <ProgressBar value={82} height="h-2" />
+            </div>
+            <div>
+              <div className="flex justify-between text-xs font-bold mb-1.5 uppercase">
+                <span className="text-slate-500">Gestão Operacional</span>
+                <span className="text-primary">64%</span>
+              </div>
+              <ProgressBar value={64} height="h-2" />
+            </div>
+            <button
+              onClick={() => setView('training')}
+              className="w-full bg-primary/5 dark:bg-primary/10 border border-primary/20 rounded-xl p-4 flex items-center justify-between mt-6 hover:bg-primary/10 transition group"
+            >
+              <div>
+                <p className="text-xs font-black text-primary uppercase tracking-widest text-left">Resumo Consolidado</p>
+                <p className="text-lg font-display font-black dark:text-white">Acessar Academia Haje</p>
+              </div>
+              <span className="material-icons-outlined text-primary group-hover:translate-x-1 transition">arrow_forward</span>
+            </button>
           </div>
         </div>
       </div>
-      
+
       {/* Alertas IA */}
       <div className="bg-red-500/5 dark:bg-red-900/10 border border-red-500/20 rounded-2xl p-6">
         <h2 className="text-base font-display font-black text-red-500 uppercase tracking-wider mb-4 flex items-center">
@@ -192,7 +188,7 @@ export const DashboardView: React.FC<DashboardProps> = ({ setView, userXp }) => 
                 <span className={`material-icons-outlined text-lg ${alert.color}`}>{alert.icon}</span>
                 <p className="text-sm font-bold text-slate-700 dark:text-slate-300 leading-tight">{alert.text}</p>
               </div>
-              <button 
+              <button
                 onClick={() => setView(alert.navigateTo as ViewType)}
                 className="text-xs font-black text-slate-500 dark:text-slate-400 hover:text-red-500 hover:underline uppercase shrink-0"
               >

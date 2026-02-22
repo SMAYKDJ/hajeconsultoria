@@ -1,13 +1,25 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { GoogleGenAI } from '@google/genai';
 
-export const StudioIAView: React.FC = () => {
+interface StudioIAViewProps {
+   initialContext?: string | null;
+   onClearContext?: () => void;
+}
+
+export const StudioIAView: React.FC<StudioIAViewProps> = ({ initialContext, onClearContext }) => {
    const [prompt, setPrompt] = useState('');
    const [response, setResponse] = useState('');
    const [isLoading, setIsLoading] = useState(false);
    const [useSearch, setUseSearch] = useState(true);
    const [sources, setSources] = useState<{ title: string, uri: string }[]>([]);
+
+   useEffect(() => {
+      if (initialContext) {
+         setPrompt(initialContext);
+         window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+   }, [initialContext]);
 
    const handleGenerateContent = async () => {
       if (!prompt.trim() || isLoading) return;
@@ -15,12 +27,13 @@ export const StudioIAView: React.FC = () => {
       setIsLoading(true);
       setResponse('');
       setSources([]);
+      if (onClearContext) onClearContext();
 
       try {
          const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
 
          const config: any = {
-            systemInstruction: 'Você é o Haje Neural Studio. Um consultor de negócios de classe mundial. Você tem acesso a dados de mercado em tempo real. Sempre forneça respostas baseadas em dados atuais e estruturadas para execução imediata.',
+            systemInstruction: 'Você é o Haje Neural Studio. Um consultor de negócios de elite especializado em ShopControl9 e gestão de vanguarda. Você recebeu dados específicos da unidade do cliente. Analise-os com rigor matemático e proponha soluções de alta performance.',
             temperature: 0.7,
          };
 
@@ -36,7 +49,6 @@ export const StudioIAView: React.FC = () => {
 
          setResponse(res.text || 'Processamento concluído sem saída de texto.');
 
-         // Extração de fontes de grounding se existirem
          const chunks = res.candidates?.[0]?.groundingMetadata?.groundingChunks;
          if (chunks) {
             const extractedSources = chunks

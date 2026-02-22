@@ -42,3 +42,12 @@ export interface Ticket {
   urgency?: 'urgent';
   avatarColor: string;
 }
+
+export interface Notification {
+  id: string;
+  title: string;
+  message: string;
+  type: 'alert' | 'insight' | 'success';
+  time: string;
+  read: boolean;
+}

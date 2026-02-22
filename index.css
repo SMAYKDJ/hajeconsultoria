@@ -131,15 +131,48 @@ body {
     animation: float 20s infinite alternate ease-in-out;
 }
 
+.animate-progress {
+    animation: slideProgress 2s ease-in-out infinite;
+    background-size: 200% 100%;
+    background-image: linear-gradient(to right, #F59E0B, #FBBF24, #F59E0B);
+}
+
+@keyframes slideProgress {
+    0% {
+        background-position: 100% 0;
+    }
+
+    100% {
+        background-position: -100% 0;
+    }
+}
+
+.text-glow {
+    text-shadow: 0 0 10px rgba(245, 158, 11, 0.4);
+}
+
+@keyframes drift {
+    from {
+        transform: translate(0, 0) scale(1);
+    }
+
+    to {
+        transform: translate(50px, 100px) scale(1.2);
+    }
+}
+
 .blob-1 {
     top: -10%;
     left: -10%;
+    background: #F59E0B;
+    animation: drift 20s infinite alternate;
 }
 
 .blob-2 {
     bottom: -10%;
     right: -10%;
-    animation-delay: -5s;
+    background: #3B82F6;
+    animation: drift 25s infinite alternate-reverse;
 }
 
 .blob-3 {
