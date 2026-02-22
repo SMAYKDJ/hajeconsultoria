@@ -22,6 +22,7 @@ const App: React.FC = () => {
   const [userXp, setUserXp] = useState(0);
   const [userLevel, setUserLevel] = useState(1);
   const [aiContext, setAiContext] = useState<string | null>(null);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const [notifications, setNotifications] = useState<Notification[]>([
     {
@@ -205,9 +206,14 @@ const App: React.FC = () => {
     <div className="flex h-screen overflow-hidden bg-background-light dark:bg-background-dark transition-colors duration-500">
       <Sidebar
         currentView={currentView}
-        setView={setCurrentView}
+        setView={(view) => {
+          setCurrentView(view);
+          setIsMobileMenuOpen(false);
+        }}
         user={currentUser}
         onLogout={handleLogout}
+        isOpen={isMobileMenuOpen}
+        setIsOpen={setIsMobileMenuOpen}
       />
 
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden relative">
@@ -225,9 +231,11 @@ const App: React.FC = () => {
           markAsRead={markAsRead}
           clearAllNotifications={clearAllNotifications}
           setCurrentView={setCurrentView}
+          isMobileMenuOpen={isMobileMenuOpen}
+          setIsMobileMenuOpen={setIsMobileMenuOpen}
         />
 
-        <main className="flex-1 overflow-auto p-0 relative">
+        <main className="flex-1 overflow-auto p-4 lg:p-0 relative">
           <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-blue-500/5 pointer-events-none"></div>
           {renderView()}
         </main>

@@ -17,6 +17,8 @@ interface HeaderProps {
     markAsRead: (id: string) => void;
     clearAllNotifications: () => void;
     setCurrentView: (view: ViewType) => void;
+    isMobileMenuOpen: boolean;
+    setIsMobileMenuOpen: (open: boolean) => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -33,6 +35,8 @@ export const Header: React.FC<HeaderProps> = ({
     markAsRead,
     clearAllNotifications,
     setCurrentView,
+    isMobileMenuOpen,
+    setIsMobileMenuOpen,
 }) => {
     const getTranslatedViewTitle = (view: ViewType): string => {
         switch (view) {
@@ -51,10 +55,17 @@ export const Header: React.FC<HeaderProps> = ({
     const xpProgress = (userXp % (userLevel * 5000)) / (userLevel * 5000) * 100;
 
     return (
-        <header className="h-20 flex items-center justify-between px-8 border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md sticky top-0 z-30 shrink-0">
-            <div className="flex items-center space-x-8">
+        <header className="h-20 flex items-center justify-between px-4 lg:px-8 border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md sticky top-0 z-30 shrink-0">
+            <div className="flex items-center space-x-4 lg:space-x-8">
+                <button
+                    onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                    className="lg:hidden p-2 -ml-2 text-slate-500 dark:text-slate-400 hover:text-primary transition-colors"
+                    aria-label="Menu"
+                >
+                    <span className="material-icons-round text-2xl">menu</span>
+                </button>
                 <div>
-                    <h1 className="text-xl font-display font-black tracking-tight dark:text-white uppercase">
+                    <h1 className="text-xl lg:text-2xl font-display font-black tracking-tight dark:text-white uppercase truncate max-w-[150px] sm:max-w-none">
                         {getTranslatedViewTitle(currentView)}
                     </h1>
                     <div className="flex items-center space-x-2">

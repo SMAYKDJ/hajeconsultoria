@@ -29,34 +29,34 @@ export const DashboardView: React.FC<DashboardProps> = ({ setView, userXp }) => 
   ];
 
   return (
-    <div className="p-8 space-y-8 max-w-7xl mx-auto">
+    <div className="p-4 sm:p-6 lg:p-8 space-y-6 lg:space-y-8 max-w-7xl mx-auto">
       {/* Ações Rápidas */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-4">
         <div className="flex items-center space-x-2">
           <span className="material-icons-outlined text-base text-slate-400" aria-hidden="true">bolt</span>
           <span className="text-sm font-black text-slate-400 uppercase tracking-widest">Ações Rápidas</span>
         </div>
-        <div className="flex flex-wrap items-center gap-3">
+        <div className="flex flex-wrap items-center gap-2">
           <button
             onClick={() => setView('users')}
-            className="bg-primary text-white px-4 py-2 rounded-lg font-bold text-sm uppercase tracking-tight shadow-sm hover:bg-orange-600 transition flex items-center space-x-2"
+            className="bg-primary text-white flex-1 sm:flex-none justify-center px-4 py-3 rounded-xl font-black text-xs uppercase tracking-tight shadow-sm hover:bg-orange-600 transition flex items-center space-x-2"
           >
             <span className="material-icons-outlined text-base">person_add</span>
-            <span>Novo Usuário</span>
+            <span>Novo</span>
           </button>
           <button
             onClick={() => setView('support')}
-            className="bg-primary text-white px-4 py-2 rounded-lg font-bold text-sm uppercase tracking-tight shadow-sm hover:bg-orange-600 transition flex items-center space-x-2"
+            className="bg-primary text-white flex-1 sm:flex-none justify-center px-4 py-3 rounded-xl font-black text-xs uppercase tracking-tight shadow-sm hover:bg-orange-600 transition flex items-center space-x-2"
           >
             <span className="material-icons-outlined text-base">confirmation_number</span>
-            <span>Novo Chamado</span>
+            <span>Chamado</span>
           </button>
           <button
             onClick={() => setView('metrics')}
-            className="bg-primary text-white px-4 py-2 rounded-lg font-bold text-sm uppercase tracking-tight shadow-sm hover:bg-orange-600 transition flex items-center space-x-2"
+            className="bg-primary text-white flex-1 sm:flex-none justify-center px-4 py-3 rounded-xl font-black text-xs uppercase tracking-tight shadow-sm hover:bg-orange-600 transition flex items-center space-x-2"
           >
             <span className="material-icons-outlined text-base">analytics</span>
-            <span>Relatórios</span>
+            <span className="hidden sm:inline">Relatórios</span>
           </button>
         </div>
       </div>
