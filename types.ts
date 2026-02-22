@@ -9,7 +9,7 @@ export type ViewType =
   | 'studio-ia'
   | 'live-consultancy';
 
-export type UserRole = 'ESPECIALISTA' | 'GESTOR' | 'FUNCIONARIO';
+export type UserRole = 'ESPECIALISTA' | 'GESTOR' | 'ALUNO' | 'ADM';
 
 export interface User {
   id: string;

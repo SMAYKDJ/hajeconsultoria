@@ -11,14 +11,14 @@ interface SidebarProps {
 
 export const Sidebar: React.FC<SidebarProps> = ({ currentView, setView, user, onLogout }) => {
   const allNavItems = [
-    { id: 'dashboard', label: 'Dashboard', icon: 'dashboard', roles: ['ESPECIALISTA', 'GESTOR', 'FUNCIONARIO'] },
-    { id: 'live-consultancy', label: 'Consultoria Live', icon: 'record_voice_over', badge: 'NOVO', roles: ['ESPECIALISTA'] },
-    { id: 'studio-ia', label: 'Studio Neural', icon: 'auto_awesome', roles: ['ESPECIALISTA'] },
-    { id: 'training', label: 'Academia', icon: 'school', roles: ['ESPECIALISTA', 'GESTOR', 'FUNCIONARIO'] },
-    { id: 'support', label: 'Suporte', icon: 'support_agent', roles: ['ESPECIALISTA', 'GESTOR', 'FUNCIONARIO'] },
-    { id: 'users', label: 'Talentos', icon: 'group', roles: ['ESPECIALISTA', 'GESTOR'] },
-    { id: 'metrics', label: 'Métricas', icon: 'analytics', roles: ['ESPECIALISTA', 'GESTOR'] },
-    { id: 'rewards', label: 'Conquistas', icon: 'military_tech', roles: ['ESPECIALISTA', 'GESTOR', 'FUNCIONARIO'] },
+    { id: 'dashboard', label: 'Dashboard', icon: 'dashboard', roles: ['ESPECIALISTA', 'GESTOR', 'ALUNO', 'ADM'] },
+    { id: 'live-consultancy', label: 'Consultoria Live', icon: 'record_voice_over', badge: 'NOVO', roles: ['ESPECIALISTA', 'ADM'] },
+    { id: 'studio-ia', label: 'Studio Neural', icon: 'auto_awesome', roles: ['ESPECIALISTA', 'ADM'] },
+    { id: 'training', label: 'Academia', icon: 'school', roles: ['ESPECIALISTA', 'GESTOR', 'ALUNO', 'ADM'] },
+    { id: 'support', label: 'Suporte', icon: 'support_agent', roles: ['ESPECIALISTA', 'GESTOR', 'ALUNO', 'ADM'] },
+    { id: 'users', label: 'Talentos', icon: 'group', roles: ['ESPECIALISTA', 'GESTOR', 'ADM'] },
+    { id: 'metrics', label: 'Métricas', icon: 'analytics', roles: ['ESPECIALISTA', 'GESTOR', 'ADM'] },
+    { id: 'rewards', label: 'Conquistas', icon: 'military_tech', roles: ['ESPECIALISTA', 'GESTOR', 'ALUNO', 'ADM'] },
   ];
 
   const filteredNavItems = allNavItems.filter(item =>

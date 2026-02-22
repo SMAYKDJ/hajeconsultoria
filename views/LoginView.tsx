@@ -25,11 +25,12 @@ export const LoginView: React.FC<LoginViewProps> = ({ onLogin }) => {
             }
 
             const name = email.split('@')[0].toUpperCase();
-            let role: UserRole = 'FUNCIONARIO';
+            let role: UserRole = 'ALUNO';
 
-            if (email === 'especialista@haje.com') role = 'ESPECIALISTA';
-            else if (email === 'gestor@gmail.com') role = 'GESTOR';
-            else if (email === 'aluno@gmail.com') role = 'FUNCIONARIO';
+            if (email === 'especialista@haje.com' || email === 'especialista') role = 'ESPECIALISTA';
+            else if (email === 'gestor@haje.com' || email === 'gestor') role = 'GESTOR';
+            else if (email === 'aluno@haje.com' || email === 'aluno') role = 'ALUNO';
+            else if (email === 'adm@haje.com' || email === 'adm') role = 'ADM';
             else {
                 alert('Usuário não cadastrado na base demo.');
                 setLoading(false);
@@ -42,10 +43,10 @@ export const LoginView: React.FC<LoginViewProps> = ({ onLogin }) => {
                 email: email,
                 role: role,
                 avatar: `https://picsum.photos/seed/${name}/100/100`,
-                level: role === 'ESPECIALISTA' ? 10 : (role === 'GESTOR' ? 5 : 4),
-                xp: role === 'ESPECIALISTA' ? 50000 : (role === 'GESTOR' ? 8000 : 3250),
+                level: role === 'ESPECIALISTA' ? 10 : (role === 'ADM' ? 99 : (role === 'GESTOR' ? 5 : 4)),
+                xp: role === 'ESPECIALISTA' ? 50000 : (role === 'ADM' ? 999999 : (role === 'GESTOR' ? 8000 : 3250)),
                 status: 'active',
-                branch: role === 'GESTOR' ? 'Matriz São Paulo' : 'Setor Geral',
+                branch: role === 'GESTOR' ? 'Matriz São Paulo' : (role === 'ADM' ? 'Sede Neural' : 'Setor Geral'),
                 registrationDate: '2025-01-15',
                 averageAccessTime: '45min',
                 accessStats: {
@@ -98,9 +99,20 @@ export const LoginView: React.FC<LoginViewProps> = ({ onLogin }) => {
                                 required
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
-                                placeholder="••••••••"
+                                placeholder="A senha geral é 123"
                                 className="w-full h-14 bg-slate-50 dark:bg-surface-dark border-2 border-slate-100 dark:border-slate-800 rounded-2xl px-6 text-sm focus:ring-primary focus:border-primary transition-all dark:text-white"
                             />
+                        </div>
+
+                        {/* Demo Accounts Quick Login */}
+                        <div className="pt-2 pb-4">
+                            <p className="text-[10px] text-center font-black text-slate-400 uppercase tracking-widest mb-3">Contas Demo Rápidas</p>
+                            <div className="grid grid-cols-2 gap-2">
+                                <button type="button" onClick={() => { setEmail('aluno@haje.com'); setPassword('123'); }} className="text-xs font-bold py-2 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-lg hover:bg-primary hover:text-white transition-colors">Aluno</button>
+                                <button type="button" onClick={() => { setEmail('gestor@haje.com'); setPassword('123'); }} className="text-xs font-bold py-2 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-lg hover:bg-primary hover:text-white transition-colors">Gestor</button>
+                                <button type="button" onClick={() => { setEmail('especialista@haje.com'); setPassword('123'); }} className="text-xs font-bold py-2 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-lg hover:bg-primary hover:text-white transition-colors">Especialista</button>
+                                <button type="button" onClick={() => { setEmail('adm@haje.com'); setPassword('123'); }} className="text-xs font-bold py-2 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-lg hover:bg-primary hover:text-white transition-colors">ADM</button>
+                            </div>
                         </div>
 
                         <button
