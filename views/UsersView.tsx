@@ -123,7 +123,7 @@ export const UsersView: React.FC = () => {
                       <span className="text-sm text-slate-400 uppercase">78%</span>
                     </div>
                     <div className="w-32 h-1.5 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden" aria-hidden="true">
-                      <div className="bg-primary h-full rounded-full" style={{ width: '78%' }}></div>
+                      <div className="bg-primary h-full rounded-full w-[78%]"></div>
                     </div>
                   </td>
                   <td className="px-6 py-5 text-right">
@@ -174,7 +174,7 @@ export const UsersView: React.FC = () => {
               </div>
             </div>
             <div className="w-full h-2 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden" aria-hidden="true">
-              <div className="bg-primary h-full rounded-full" style={{ width: '78%' }}></div>
+              <div className="bg-primary h-full rounded-full w-[78%]"></div>
             </div>
           </section>
 

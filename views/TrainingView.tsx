@@ -36,7 +36,7 @@ export const TrainingView: React.FC<TrainingProps> = ({ addXp, userXp, setView }
                      <span className="text-xs font-bold text-slate-400 uppercase">Total: {userXp} XP</span>
                   </div>
                   <div className="h-2 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
-                     <div className="h-full bg-primary" style={{ width: '45%' }}></div>
+                     <div className="h-full bg-primary w-[45%]"></div>
                   </div>
                </div>
                <div className="flex items-center space-x-4">
