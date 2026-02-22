@@ -74,7 +74,7 @@ export const TrainingView: React.FC<TrainingProps> = ({ addXp, userXp, setView }
                   </div>
                   <div className="flex items-center space-x-2 bg-white dark:bg-card-dark px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
                      <span className="material-icons-outlined text-base text-slate-400">schedule</span>
-                     <span className="text-sm font-bold text-slate-500">12 min</span>
+                     <span className="text-sm font-bold text-slate-500">10 min</span>
                   </div>
                </div>
 
