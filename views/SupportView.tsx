@@ -176,26 +176,24 @@ export const SupportView: React.FC = () => {
           </button>
         </header>
 
-        <div className="flex-1 p-6 overflow-y-auto flex flex-col space-y-4">
+        <div className="flex-1 p-4 sm:p-6 overflow-y-auto flex flex-col space-y-3 bg-slate-100/50 dark:bg-transparent">
           {messages.map((m) => (
             m.isSystem ? (
-              <div key={m.id} className="flex justify-center my-2">
-                <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 dark:text-slate-500 italic">{m.text}</p>
+              <div key={m.id} className="flex justify-center my-3">
+                <span className="text-[10px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400 px-4 py-1.5 bg-slate-200/50 dark:bg-slate-800/50 rounded-xl">{m.text}</span>
               </div>
             ) : (
-              <div key={m.id} className={`flex ${m.isCustomer ? 'justify-start' : 'justify-end'} items-end space-x-3 max-w-[85%] ${m.isCustomer ? '' : 'self-end'}`}>
-                {m.isCustomer && <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-xs font-black text-white shrink-0" aria-hidden="true">{m.initial}</div>}
-                <div className={`rounded-2xl p-4 shadow-sm border ${m.isCustomer
-                  ? 'bg-white dark:bg-surface-dark border-slate-200 dark:border-slate-800'
+              <div key={m.id} className={`flex ${m.isCustomer ? 'justify-start' : 'justify-end'} items-end space-x-2 max-w-[90%] sm:max-w-[75%] ${m.isCustomer ? '' : 'self-end'}`}>
+                <div className={`rounded-2xl px-4 py-2.5 shadow-sm flex flex-col min-w-[100px] ${m.isCustomer
+                  ? 'bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-800 rounded-bl-sm'
                   : m.isInternal
-                    ? 'bg-amber-50 dark:bg-amber-500/10 border-amber-200 dark:border-amber-500/20'
-                    : 'bg-primary text-white border-primary shadow-lg shadow-primary/20'
+                    ? 'bg-amber-50 dark:bg-amber-900/40 border border-amber-200 dark:border-amber-800/50 rounded-br-sm'
+                    : 'bg-primary text-white rounded-br-sm shadow-primary/20'
                   }`}>
-                  {m.isInternal && <div className="text-[9px] font-black uppercase text-amber-600 dark:text-amber-400 mb-1 tracking-widest">Mensagem Interna</div>}
-                  <p className={`text-sm leading-relaxed ${m.isCustomer || m.isInternal ? 'text-slate-700 dark:text-slate-200' : 'text-white'}`}>{m.text}</p>
-                  <span className={`block text-[9px] font-bold mt-2 text-right ${m.isCustomer || m.isInternal ? 'text-slate-400' : 'text-white/60'}`}>{m.time}</span>
+                  {m.isInternal && <div className="text-[10px] font-black uppercase text-amber-600 dark:text-amber-400 mb-1 tracking-widest">⚠️ Nota Interna</div>}
+                  <p className={`text-[15px] leading-relaxed break-words ${m.isCustomer || m.isInternal ? 'text-slate-700 dark:text-slate-200' : 'text-white'}`}>{m.text}</p>
+                  <span className={`text-[10px] font-bold mt-1 text-right self-end ${m.isCustomer || m.isInternal ? 'text-slate-400' : 'text-white/70'}`}>{m.time}</span>
                 </div>
-                {!m.isCustomer && <div className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-xs font-black text-white shrink-0" aria-hidden="true">{m.initial}</div>}
               </div>
             )
           ))}
