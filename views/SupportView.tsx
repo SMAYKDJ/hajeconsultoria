@@ -159,9 +159,7 @@ export const SupportView: React.FC = () => {
       <section className="w-full lg:flex-1 flex flex-col bg-slate-50 dark:bg-background-dark/50 min-h-[600px] lg:min-h-0 lg:overflow-hidden relative">
         <header className="h-[72px] sm:h-20 flex items-center justify-between px-5 py-3 border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-surface-dark/80 backdrop-blur-md sticky top-0 z-40 shrink-0">
           <div className="flex items-center space-x-3">
-            <button className="lg:hidden w-8 h-8 flex items-center justify-center rounded-full text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" aria-label="Voltar">
-              <span className="material-icons-outlined text-[20px]">arrow_back_ios_new</span>
-            </button>
+
             <div className="relative">
               <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-black text-white ${currentTicketObj?.avatarColor || 'bg-primary'} shadow-lg border border-slate-200 dark:border-slate-800`}>
                 {userInitials}
@@ -197,10 +195,10 @@ export const SupportView: React.FC = () => {
               <div key={m.id} className={`flex ${m.isCustomer ? 'items-end space-x-2 max-w-[85%]' : 'flex-row-reverse space-x-reverse space-x-2 self-end ml-auto max-w-[85%]'}`}>
                 <div className={`flex flex-col space-y-1 ${!m.isCustomer ? 'items-end' : ''}`}>
                   <div className={`p-3.5 shadow-sm relative ${m.isCustomer
-                      ? 'bg-white dark:bg-card-dark text-slate-800 dark:text-slate-200 rounded-2xl rounded-bl-sm border border-slate-200 dark:border-slate-800/60'
-                      : m.isInternal
-                        ? 'bg-amber-100 dark:bg-amber-900/40 text-amber-900 dark:text-amber-100 rounded-2xl rounded-br-sm border border-amber-200 dark:border-amber-800/50'
-                        : 'bg-primary text-white rounded-2xl rounded-br-sm shadow-[0_4px_15px_-3px_rgba(234,88,12,0.3)]'
+                    ? 'bg-white dark:bg-card-dark text-slate-800 dark:text-slate-200 rounded-2xl rounded-bl-sm border border-slate-200 dark:border-slate-800/60'
+                    : m.isInternal
+                      ? 'bg-amber-100 dark:bg-amber-900/40 text-amber-900 dark:text-amber-100 rounded-2xl rounded-br-sm border border-amber-200 dark:border-amber-800/50'
+                      : 'bg-primary text-white rounded-2xl rounded-br-sm shadow-[0_4px_15px_-3px_rgba(234,88,12,0.3)]'
                     }`}>
                     {m.isInternal && <div className="text-[10px] font-black uppercase text-amber-600 dark:text-amber-400 mb-1 tracking-widest">⚠️ Nota Interna</div>}
                     <p className={`text-[14px] leading-[1.5] font-medium ${m.isCustomer ? 'text-slate-700 dark:text-slate-200' : 'text-white'}`}>{m.text}</p>
