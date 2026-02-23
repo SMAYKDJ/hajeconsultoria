@@ -82,12 +82,12 @@ export const SupportView: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col lg:flex-row h-full overflow-y-auto lg:overflow-hidden">
+    <div className="flex flex-col lg:flex-row lg:h-full w-full bg-background-light dark:bg-background-dark">
       {/* Ticket List */}
-      <section className="w-full lg:w-80 flex flex-col border-b lg:border-b-0 lg:border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-surface-dark/30 overflow-hidden shrink-0 min-h-[400px] lg:min-h-0">
-        <div className="p-4 space-y-4">
-          <h2 className="text-base font-display font-black dark:text-white uppercase tracking-wider">
-            Suporte <span className="text-primary">Gestão Operacional</span>
+      <section className="w-full lg:w-80 flex flex-col border-b lg:border-b-0 lg:border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-surface-dark/30 shrink-0 min-h-[400px] lg:min-h-0">
+        <div className="p-4 lg:p-4 space-y-4">
+          <h2 className="text-sm lg:text-base font-display font-black dark:text-white uppercase tracking-wider">
+            Suporte <span className="text-primary">Gestão</span>
           </h2>
           <div className="relative">
             <span className="material-icons-outlined absolute left-3 top-2.5 text-base text-slate-400" aria-hidden="true">search</span>
@@ -153,7 +153,7 @@ export const SupportView: React.FC = () => {
       </section>
 
       {/* Chat Area */}
-      <section className="flex-1 flex flex-col bg-slate-50 dark:bg-background-dark/50 min-h-[500px] lg:min-h-0">
+      <section className="w-full lg:flex-1 flex flex-col bg-slate-50 dark:bg-background-dark/50 min-h-[600px] lg:min-h-0 lg:overflow-hidden">
         <header className="h-14 flex items-center justify-between px-6 bg-white dark:bg-surface-dark border-b border-slate-200 dark:border-slate-800">
           <div className="flex items-center space-x-4">
             <div className="w-8 h-8 rounded-lg bg-slate-100 dark:bg-card-dark flex items-center justify-center text-xs font-black" aria-hidden="true">
@@ -280,7 +280,7 @@ export const SupportView: React.FC = () => {
       </section>
 
       {/* User Info Analysis */}
-      <section className="w-full lg:w-80 border-t lg:border-t-0 lg:border-l border-slate-200 dark:border-slate-800 bg-white dark:bg-surface-dark/30 p-4 shrink-0">
+      <section className="w-full lg:w-80 border-t lg:border-t-0 lg:border-l border-slate-200 dark:border-slate-800 bg-white dark:bg-surface-dark/30 p-4 lg:p-4 shrink-0 lg:overflow-y-auto">
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center space-x-2">
             <div className="w-1.5 h-1.5 rounded-full bg-primary" aria-hidden="true"></div>

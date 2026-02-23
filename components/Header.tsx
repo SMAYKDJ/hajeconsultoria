@@ -64,8 +64,8 @@ export const Header: React.FC<HeaderProps> = ({
                 >
                     <span className="material-icons-round text-2xl">menu</span>
                 </button>
-                <div>
-                    <h1 className="text-xl lg:text-2xl font-display font-black tracking-tight dark:text-white uppercase truncate max-w-[150px] sm:max-w-none">
+                <div className="flex-1 min-w-0">
+                    <h1 className="text-lg sm:text-xl lg:text-2xl font-display font-black tracking-tight dark:text-white uppercase truncate max-w-[200px] sm:max-w-none">
                         {getTranslatedViewTitle(currentView)}
                     </h1>
                     <div className="flex items-center space-x-2">
