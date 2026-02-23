@@ -26,8 +26,8 @@ export const TrainingView: React.FC<TrainingProps> = ({ addXp, userXp, setView }
    };
 
    return (
-      <div className="flex h-full overflow-hidden bg-background-light dark:bg-background-dark">
-         <section className="flex-1 overflow-y-auto p-6 space-y-6">
+      <div className="flex flex-col lg:flex-row h-full lg:overflow-hidden overflow-y-auto bg-background-light dark:bg-background-dark">
+         <section className="flex-1 lg:overflow-y-auto p-4 sm:p-6 space-y-6">
             {/* Cabeçalho de Progresso */}
             <div className="bg-white dark:bg-card-dark p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
                <div className="flex-1 max-w-xl">
@@ -39,10 +39,10 @@ export const TrainingView: React.FC<TrainingProps> = ({ addXp, userXp, setView }
                      <div className="h-full bg-primary w-[45%]"></div>
                   </div>
                </div>
-               <div className="flex items-center space-x-4">
+               <div className="flex items-center space-x-4 w-full md:w-auto mt-4 md:mt-0">
                   <button
                      onClick={() => setView('rewards')}
-                     className="bg-primary/10 px-4 py-2 rounded-xl border border-primary/20 flex items-center space-x-2 hover:bg-primary/20 transition"
+                     className="w-full md:w-auto bg-primary/10 px-4 py-2 rounded-xl border border-primary/20 flex items-center justify-center space-x-2 hover:bg-primary/20 transition"
                   >
                      <span className="material-icons-outlined text-lg text-primary">workspace_premium</span>
                      <span className="text-sm font-black text-primary">Ver Conquistas</span>
@@ -64,7 +64,7 @@ export const TrainingView: React.FC<TrainingProps> = ({ addXp, userXp, setView }
 
             {/* Detalhes da Aula */}
             <div className="space-y-6">
-               <div className="flex justify-between items-start">
+               <div className="flex flex-col md:flex-row justify-between items-start gap-4">
                   <div>
                      <div className="flex items-center space-x-3 mb-1">
                         <span className="text-sm font-black text-primary uppercase tracking-widest">Módulo 04: Estratégia</span>
@@ -133,7 +133,7 @@ export const TrainingView: React.FC<TrainingProps> = ({ addXp, userXp, setView }
          </section>
 
          {/* Sidebar de Currículo */}
-         <aside className="w-80 border-l border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-background-dark/50 flex flex-col shrink-0">
+         <aside className="w-full lg:w-80 border-t lg:border-t-0 lg:border-l border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-background-dark/50 flex flex-col shrink-0 min-h-[400px] lg:min-h-0">
             <div className="p-6 border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-card-dark">
                <h2 className="text-sm font-display font-black dark:text-white uppercase tracking-widest flex items-center">
                   <span className="w-2 h-2 rounded-full bg-primary mr-2 animate-pulse"></span>

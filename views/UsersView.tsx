@@ -65,8 +65,8 @@ export const UsersView: React.FC = () => {
 
   return (
     <div className="flex h-full relative overflow-hidden">
-      <div className={`flex-1 overflow-auto p-8 transition-all duration-300 ${isDrawerOpen ? 'mr-[480px]' : ''}`}>
-        <div className="mb-8 flex items-center justify-between">
+      <div className={`flex-1 overflow-auto p-4 sm:p-8 transition-all duration-300 ${isDrawerOpen ? 'lg:mr-[480px]' : ''}`}>
+        <div className="mb-6 lg:mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="relative w-full max-w-xl">
             <span className="material-icons-round absolute left-3 top-1/2 -translate-y-1/2 text-lg text-slate-400" aria-hidden="true">search</span>
             <input
@@ -81,12 +81,12 @@ export const UsersView: React.FC = () => {
             aria-label="Adicionar novo usuário"
           >
             <span className="material-icons-round text-lg" aria-hidden="true">add</span>
-            <span className="text-sm uppercase tracking-widest">Novo Usuário</span>
+            <span className="text-sm uppercase tracking-widest">Novo</span>
           </button>
         </div>
 
-        <div className="bg-white dark:bg-card-dark rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
-          <table className="w-full text-left border-collapse">
+        <div className="bg-white dark:bg-card-dark rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-x-auto">
+          <table className="w-full text-left border-collapse min-w-[700px]">
             <thead>
               <tr className="bg-slate-50 dark:bg-slate-800/50 text-sm font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400 border-b border-slate-100 dark:border-slate-800">
                 <th className="px-6 py-4">Identificação Acadêmica</th>
@@ -143,18 +143,22 @@ export const UsersView: React.FC = () => {
       </div>
 
       {/* Drawer */}
-      <aside className={`fixed right-0 top-0 h-full w-[480px] bg-white dark:bg-card-dark border-l border-slate-200 dark:border-slate-800 shadow-2xl z-50 flex flex-col transition-transform duration-300 transform ${isDrawerOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+      <div
+        className={`fixed inset-0 bg-black/60 z-40 lg:hidden transition-opacity duration-300 ${isDrawerOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+        onClick={() => setIsDrawerOpen(false)}
+      />
+      <aside className={`fixed right-0 top-0 h-full w-full sm:w-[480px] bg-white dark:bg-card-dark border-l border-slate-200 dark:border-slate-800 shadow-2xl z-50 flex flex-col transition-transform duration-300 transform ${isDrawerOpen ? 'translate-x-0' : 'translate-x-full'}`}>
         <div className="p-6 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between bg-slate-50/50 dark:bg-slate-800/30">
           <div className="flex items-center gap-2">
             <span className="material-icons-round text-primary text-xl" aria-hidden="true">edit</span>
-            <h3 className="text-lg font-display font-black dark:text-white uppercase tracking-tight">Editar Usuário</h3>
+            <h3 className="text-sm sm:text-lg font-display font-black dark:text-white uppercase tracking-tight">Editar Usuário</h3>
           </div>
           <button onClick={handleCancelChanges} className="p-2 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-full transition-colors" aria-label="Fechar painel de edição">
             <span className="material-icons-round text-xl" aria-hidden="true">close</span>
           </button>
         </div>
 
-        <div className="flex-1 overflow-y-auto p-8 space-y-8">
+        <div className="flex-1 overflow-y-auto p-4 sm:p-8 space-y-8">
           <div className="flex flex-col items-center">
             <div className="relative group cursor-pointer w-24 h-24" onClick={handleUpdatePhoto} role="button" tabIndex={0} aria-label="Atualizar foto do usuário">
               <img src={selectedUser?.avatar} className="w-full h-full rounded-full object-cover border-2 border-primary shadow-md" alt={`Foto de perfil de ${selectedUser?.name}`} />
