@@ -81,6 +81,9 @@ export const SupportView: React.FC = () => {
     setMessageInput(suggestion);
   };
 
+  const currentTicketObj = tickets.find(t => t.id === selectedTicket);
+  const userInitials = currentTicketObj ? currentTicketObj.user.charAt(0) : 'F';
+
   return (
     <div className="flex flex-col lg:flex-row lg:h-full w-full bg-background-light dark:bg-background-dark">
       {/* Ticket List */}
@@ -154,68 +157,82 @@ export const SupportView: React.FC = () => {
 
       {/* Chat Area */}
       <section className="w-full lg:flex-1 flex flex-col bg-slate-50 dark:bg-background-dark/50 min-h-[600px] lg:min-h-0 lg:overflow-hidden">
-        <header className="h-14 flex items-center justify-between px-6 bg-white dark:bg-surface-dark border-b border-slate-200 dark:border-slate-800">
+        <header className="h-16 flex items-center justify-between px-4 sm:px-6 bg-white dark:bg-surface-dark border-b border-slate-200 dark:border-slate-800 shrink-0">
           <div className="flex items-center space-x-4">
-            <div className="w-8 h-8 rounded-lg bg-slate-100 dark:bg-card-dark flex items-center justify-center text-xs font-black" aria-hidden="true">
-              <span className="text-xs font-black">#</span>
+            <button className="lg:hidden text-slate-500 hover:text-slate-800 transition-colors" aria-label="Voltar">
+              <span className="material-icons-round text-3xl">chevron_left</span>
+            </button>
+            <div className="relative flex-shrink-0">
+              <div className={`w-12 h-12 rounded-full flex items-center justify-center text-lg font-black text-white ${currentTicketObj?.avatarColor || 'bg-primary'}`}>
+                {userInitials}
+              </div>
+              <div className="absolute bottom-0 right-0 w-3.5 h-3.5 rounded-full bg-green-500 border-2 border-white dark:border-surface-dark flex-shrink-0" aria-hidden="true"></div>
             </div>
-            <div>
-              <h2 className="text-base font-bold dark:text-white uppercase tracking-tight">Ticket #{selectedTicket}</h2>
-              <div className="flex items-center space-x-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-green-500" aria-hidden="true"></div>
-                <span className="text-xs text-slate-400 uppercase font-black tracking-widest">Ativo Agora</span>
+            <div className="flex flex-col">
+              <h2 className="text-sm sm:text-base font-black dark:text-white uppercase tracking-tight">Ticket #{selectedTicket}</h2>
+              <div className="flex items-center space-x-1.5 mt-0.5">
+                <div className="w-1.5 h-1.5 rounded-full bg-green-500 flex-shrink-0" aria-hidden="true"></div>
+                <span className="text-[10px] sm:text-xs text-slate-400 uppercase font-bold tracking-widest">Ativo Agora</span>
               </div>
             </div>
           </div>
           <button
             onClick={handleEndTicket}
-            className="px-4 py-1.5 bg-slate-900 dark:bg-card-dark text-xs font-black uppercase text-white rounded-lg hover:bg-slate-800 transition"
+            className="px-4 py-2 bg-slate-100 dark:bg-slate-800 text-[10px] sm:text-xs font-black uppercase text-slate-600 dark:text-slate-300 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition tracking-wider shrink-0"
             aria-label={`Encerrar Ticket ${selectedTicket}`}
           >
             Encerrar Ticket
           </button>
         </header>
 
-        <div className="flex-1 p-4 sm:p-6 overflow-y-auto flex flex-col space-y-3 bg-slate-100/50 dark:bg-transparent">
+        <div className="flex-1 p-4 sm:p-6 overflow-y-auto flex flex-col space-y-6 bg-slate-50 dark:bg-transparent">
           {messages.map((m) => (
             m.isSystem ? (
-              <div key={m.id} className="flex justify-center my-3">
-                <span className="text-[10px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400 px-4 py-1.5 bg-slate-200/50 dark:bg-slate-800/50 rounded-xl">{m.text}</span>
+              <div key={m.id} className="flex justify-center my-2">
+                <span className="text-[10px] sm:text-[11px] font-black uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500">{m.text}</span>
               </div>
             ) : (
-              <div key={m.id} className={`flex ${m.isCustomer ? 'justify-start' : 'justify-end'} items-end space-x-2 max-w-[90%] sm:max-w-[75%] ${m.isCustomer ? '' : 'self-end'}`}>
-                <div className={`rounded-2xl px-4 py-2.5 shadow-sm flex flex-col min-w-[100px] ${m.isCustomer
-                  ? 'bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-800 rounded-bl-sm'
+              <div key={m.id} className={`flex ${m.isCustomer ? 'justify-start' : 'justify-end'} items-end space-x-2 w-full`}>
+                {m.isCustomer && (
+                  <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full ${currentTicketObj?.avatarColor || 'bg-primary'} flex items-center justify-center text-xs sm:text-sm font-black text-white shrink-0 mb-1`}>{m.initial}</div>
+                )}
+                <div className={`rounded-2xl px-4 sm:px-5 py-3 shadow-sm flex flex-col max-w-[75%] sm:max-w-[65%] ${m.isCustomer
+                  ? 'bg-white dark:bg-surface-dark border border-slate-100 dark:border-slate-800 rounded-bl-sm'
                   : m.isInternal
                     ? 'bg-amber-50 dark:bg-amber-900/40 border border-amber-200 dark:border-amber-800/50 rounded-br-sm'
                     : 'bg-primary text-white rounded-br-sm shadow-primary/20'
                   }`}>
                   {m.isInternal && <div className="text-[10px] font-black uppercase text-amber-600 dark:text-amber-400 mb-1 tracking-widest">⚠️ Nota Interna</div>}
-                  <p className={`text-[15px] leading-relaxed break-words ${m.isCustomer || m.isInternal ? 'text-slate-700 dark:text-slate-200' : 'text-white'}`}>{m.text}</p>
-                  <span className={`text-[10px] font-bold mt-1 text-right self-end ${m.isCustomer || m.isInternal ? 'text-slate-400' : 'text-white/70'}`}>{m.time}</span>
+                  <p className={`text-[14px] sm:text-[15px] leading-relaxed break-words ${m.isCustomer || m.isInternal ? 'text-slate-700 dark:text-slate-200' : 'text-white'}`}>{m.text}</p>
+                  <span className={`text-[10px] font-bold mt-1.5 text-right self-end ${m.isCustomer || m.isInternal ? 'text-slate-400' : 'text-white/80'}`}>{m.time}</span>
                 </div>
+                {!m.isCustomer && (
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-blue-600 flex items-center justify-center text-xs sm:text-sm font-black text-white shrink-0 mb-1">{m.initial}</div>
+                )}
               </div>
             )
           ))}
         </div>
 
-        <div className="p-6">
+        <div className="p-4 sm:p-6 bg-slate-50 dark:bg-transparent">
           {/* AI Quick Response Suggestions */}
-          <div className="mb-4 flex flex-wrap gap-2">
-            <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Sugestões (IA):</span>
-            {aiSuggestions.map((suggestion, idx) => (
-              <button
-                key={idx}
-                onClick={() => handleAISuggestion(suggestion)}
-                className="px-3 py-1 rounded-full bg-white dark:bg-card-dark border border-slate-200 dark:border-slate-800 text-[10px] font-black text-slate-500 dark:text-slate-300 hover:border-primary hover:text-primary transition uppercase tracking-tighter"
-                aria-label={`Usar sugestão: ${suggestion}`}
-              >
-                {suggestion}
-              </button>
-            ))}
+          <div className="mb-6 flex flex-col items-start gap-3">
+            <span className="text-[10px] font-black text-slate-400 uppercase tracking-[0.15em]">Sugestões (IA):</span>
+            <div className="flex flex-wrap gap-2">
+              {aiSuggestions.map((suggestion, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => handleAISuggestion(suggestion)}
+                  className="px-4 py-2.5 rounded-full bg-white dark:bg-card-dark border border-slate-200 dark:border-slate-700 text-[10px] sm:text-[11px] font-black text-slate-600 dark:text-slate-300 shadow-sm hover:border-primary hover:text-primary transition uppercase tracking-wider"
+                  aria-label={`Usar sugestão: ${suggestion}`}
+                >
+                  {suggestion}
+                </button>
+              ))}
+            </div>
           </div>
 
-          <div className="bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-800 rounded-[32px] shadow-2xl overflow-hidden relative">
+          <div className="bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-800 rounded-3xl shadow-xl overflow-hidden relative">
             {showEmojiPicker && (
               <div className="absolute bottom-full left-4 mb-2 p-3 bg-white dark:bg-card-dark border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl z-50 animate-slideUp">
                 <div className="grid grid-cols-8 gap-2">
@@ -232,7 +249,7 @@ export const SupportView: React.FC = () => {
               </div>
             )}
             <textarea
-              className="w-full bg-transparent border-none resize-none p-5 text-sm text-slate-600 dark:text-slate-200 focus:ring-0 font-medium"
+              className="w-full bg-transparent border-none resize-none p-5 text-[15px] sm:text-base text-slate-700 dark:text-slate-200 focus:ring-0 font-medium"
               placeholder="Escreva sua resposta de elite..."
               rows={2}
               value={messageInput}
@@ -240,36 +257,30 @@ export const SupportView: React.FC = () => {
               onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSendMessage(); } }}
               aria-label="Campo para escrever a resposta do chat"
             />
-            <div className="flex items-center justify-between px-5 py-3 border-t border-slate-50 dark:border-slate-800/50 bg-slate-50/50 dark:bg-card-dark/30">
-              <div className="flex items-center space-x-1">
-                <button onClick={handleFileAttach} className="w-8 h-8 flex items-center justify-center text-slate-400 hover:text-primary transition-colors" aria-label="Anexar arquivo"><span className="material-icons-outlined text-xl">attach_file</span></button>
-                <button onClick={() => setShowEmojiPicker(!showEmojiPicker)} className={`w-8 h-8 flex items-center justify-center transition-colors ${showEmojiPicker ? 'text-primary' : 'text-slate-400 hover:text-primary'}`} aria-label="Selecionar emoji"><span className="material-icons-outlined text-xl">sentiment_satisfied_alt</span></button>
-                <button onClick={handleImageUpload} className="w-8 h-8 flex items-center justify-center text-slate-400 hover:text-primary transition-colors" aria-label="Upload de imagem"><span className="material-icons-outlined text-xl">image</span></button>
-                <div className="h-4 w-px bg-slate-200 dark:bg-slate-800 mx-2" aria-hidden="true" />
-                <label className="flex items-center space-x-2 cursor-pointer group">
-                  <div className={`w-4 h-4 rounded-md border-2 ${isInternalMessage ? 'border-amber-500 bg-amber-500 shadow-sm shadow-amber-500/30' : 'border-slate-300 dark:border-slate-700'} flex items-center justify-center transition-all`} aria-hidden="true">
-                    {isInternalMessage && <span className="material-icons-round text-[10px] text-white font-black">check</span>}
+            <div className="flex flex-wrap sm:flex-nowrap items-center justify-between px-4 sm:px-6 py-3 border-t border-slate-100 dark:border-slate-800/50 bg-white dark:bg-transparent">
+              <div className="flex items-center space-x-2 sm:space-x-3 w-full sm:w-auto overflow-x-auto pb-2 sm:pb-0">
+                <button onClick={handleFileAttach} className="flex-shrink-0 w-8 h-8 flex items-center justify-center text-slate-400 hover:text-slate-600 transition-colors" aria-label="Anexar arquivo"><span className="material-icons-outlined text-2xl">attachment</span></button>
+                <button onClick={() => setShowEmojiPicker(!showEmojiPicker)} className={`flex-shrink-0 w-8 h-8 flex items-center justify-center transition-colors ${showEmojiPicker ? 'text-primary' : 'text-slate-400 hover:text-slate-600'}`} aria-label="Selecionar emoji"><span className="material-icons-outlined text-xl">sentiment_satisfied_alt</span></button>
+                <button onClick={handleImageUpload} className="flex-shrink-0 w-8 h-8 flex items-center justify-center text-slate-400 hover:text-slate-600 transition-colors" aria-label="Upload de imagem"><span className="material-icons-outlined text-xl">image</span></button>
+                <div className="h-6 w-px bg-slate-200 dark:bg-slate-700 mx-2" aria-hidden="true" />
+                <label className="flex items-center space-x-2 cursor-pointer group shrink-0">
+                  <div className="relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" className="sr-only peer" checked={isInternalMessage} onChange={() => setIsInternalMessage(!isInternalMessage)} aria-label="Marcar como interna" />
+                    <div className="w-9 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-slate-600 peer-checked:bg-amber-500"></div>
                   </div>
-                  <input
-                    type="checkbox"
-                    className="sr-only"
-                    checked={isInternalMessage}
-                    onChange={() => setIsInternalMessage(!isInternalMessage)}
-                    aria-label="Marcar como mensagem interna"
-                  />
-                  <span className={`text-[10px] font-black uppercase tracking-widest transition-colors ${isInternalMessage ? 'text-amber-500' : 'text-slate-400 dark:text-slate-500 group-hover:text-primary'}`}>Interna</span>
+                  <span className={`text-[10px] sm:text-[11px] font-black uppercase tracking-widest transition-colors ${isInternalMessage ? 'text-amber-500' : 'text-slate-400 dark:text-slate-500'}`}>Interna</span>
                 </label>
               </div>
               <button
                 onClick={handleSendMessage}
                 disabled={!messageInput.trim()}
-                className={`flex items-center space-x-2 px-6 py-2.5 rounded-2xl transition-all duration-300 shadow-xl ${!messageInput.trim()
+                className={`mt-2 sm:mt-0 w-full sm:w-auto flex items-center justify-center space-x-2 px-6 sm:px-8 py-3 rounded-full transition-all duration-300 shadow-xl ${!messageInput.trim()
                   ? 'bg-slate-100 dark:bg-slate-800 text-slate-400 cursor-not-allowed opacity-50'
-                  : 'bg-primary text-white hover:bg-orange-600 shadow-primary/30 transform hover:-translate-y-0.5'
+                  : 'bg-slate-900 dark:bg-black text-white hover:bg-slate-800'
                   }`}
                 aria-label="Enviar mensagem"
               >
-                <span className="text-[10px] font-black uppercase tracking-[0.15em]">Lançar Resposta</span>
+                <span className="text-[10px] sm:text-xs font-black uppercase tracking-widest sm:tracking-[0.15em]">Lançar Resposta</span>
                 <span className="material-icons-round text-sm" aria-hidden="true">send</span>
               </button>
             </div>
