@@ -1,23 +1,15 @@
 import React from 'react';
-import { Notification } from '../types';
+import { useNotifications } from '../contexts/NotificationContext';
 
-interface NotificationCenterProps {
-    notifications: Notification[];
-    showNotifications: boolean;
-    setShowNotifications: (show: boolean) => void;
-    simulateNeuralAlert: () => void;
-    markAsRead: (id: string) => void;
-    clearAllNotifications: () => void;
-}
-
-export const NotificationCenter: React.FC<NotificationCenterProps> = ({
-    notifications,
-    showNotifications,
-    setShowNotifications,
-    simulateNeuralAlert,
-    markAsRead,
-    clearAllNotifications,
-}) => {
+export const NotificationCenter: React.FC = () => {
+    const {
+        notifications,
+        showNotifications,
+        setShowNotifications,
+        simulateNeuralAlert,
+        markAsRead,
+        clearAllNotifications,
+    } = useNotifications();
     return (
         <div className="relative">
             <button

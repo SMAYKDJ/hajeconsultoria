@@ -1,43 +1,40 @@
-import React from 'react';
-import { ViewType, User, Notification } from '../types';
+import React, { useState, useEffect } from 'react';
+import { ViewType } from '../types';
 import { NotificationCenter } from './NotificationCenter';
 import { ProgressBar } from './ProgressBar';
+import { useAuth } from '../contexts/AuthContext';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 interface HeaderProps {
-    currentView: ViewType;
-    currentUser: User | null;
-    userXp: number;
-    userLevel: number;
-    darkMode: boolean;
-    setDarkMode: (dark: boolean) => void;
-    notifications: Notification[];
-    showNotifications: boolean;
-    setShowNotifications: (show: boolean) => void;
-    simulateNeuralAlert: () => void;
-    markAsRead: (id: string) => void;
-    clearAllNotifications: () => void;
-    setCurrentView: (view: ViewType) => void;
     isMobileMenuOpen: boolean;
     setIsMobileMenuOpen: (open: boolean) => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
-    currentView,
-    currentUser,
-    userXp,
-    userLevel,
-    darkMode,
-    setDarkMode,
-    notifications,
-    showNotifications,
-    setShowNotifications,
-    simulateNeuralAlert,
-    markAsRead,
-    clearAllNotifications,
-    setCurrentView,
     isMobileMenuOpen,
     setIsMobileMenuOpen,
 }) => {
+    const { currentUser, userXp, userLevel } = useAuth();
+    const location = useLocation();
+    const navigate = useNavigate();
+    const currentView = (location.pathname.substring(1) || 'dashboard') as ViewType;
+
+    // Gerenciamento de tema simplificado
+    const [darkMode, setDarkMode] = useState(() => {
+        const savedTheme = localStorage.getItem('haje_theme');
+        return savedTheme ? savedTheme === 'dark' : true;
+    });
+
+    useEffect(() => {
+        if (darkMode) {
+            document.documentElement.classList.add('dark');
+            localStorage.setItem('haje_theme', 'dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+            localStorage.setItem('haje_theme', 'light');
+        }
+    }, [darkMode]);
+
     const getTranslatedViewTitle = (view: ViewType): string => {
         switch (view) {
             case 'dashboard': return 'Dashboard Estratégico';
@@ -51,8 +48,6 @@ export const Header: React.FC<HeaderProps> = ({
             default: return 'Haje Consultoria';
         }
     };
-
-    const xpProgress = (userXp % (userLevel * 5000)) / (userLevel * 5000) * 100;
 
     return (
         <header className="h-20 flex items-center justify-between px-4 lg:px-8 border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md sticky top-0 z-30 shrink-0">
@@ -87,14 +82,7 @@ export const Header: React.FC<HeaderProps> = ({
             </div>
 
             <div className="flex items-center space-x-6">
-                <NotificationCenter
-                    notifications={notifications}
-                    showNotifications={showNotifications}
-                    setShowNotifications={setShowNotifications}
-                    simulateNeuralAlert={simulateNeuralAlert}
-                    markAsRead={markAsRead}
-                    clearAllNotifications={clearAllNotifications}
-                />
+                <NotificationCenter />
 
                 <button
                     onClick={() => setDarkMode(!darkMode)}
@@ -116,7 +104,7 @@ export const Header: React.FC<HeaderProps> = ({
                     </div>
                     <div
                         className="w-12 h-12 rounded-2xl bg-gradient-to-br from-primary to-orange-600 p-[2px] cursor-pointer group hover:rotate-3 transition-all"
-                        onClick={() => setCurrentView('users')}
+                        onClick={() => navigate('/users')}
                     >
                         <div className="w-full h-full rounded-[14px] overflow-hidden border-2 border-white dark:border-background-dark relative">
                             <img src={currentUser?.avatar || "https://picsum.photos/seed/smayk/100/100"} className="w-full h-full object-cover" alt="Avatar" />

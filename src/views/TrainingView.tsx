@@ -1,14 +1,12 @@
 
 import React, { useState } from 'react';
-import { ViewType } from '../types';
+import { useAuth } from '../contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
-interface TrainingProps {
-   addXp: (amount: number) => void;
-   userXp: number;
-   setView: (view: ViewType) => void;
-}
-
-export const TrainingView: React.FC<TrainingProps> = ({ addXp, userXp, setView }) => {
+export const TrainingView: React.FC = () => {
+   const { addXp, userXp } = useAuth();
+   const navigate = useNavigate();
+   const setView = (view: string) => navigate(`/${view}`);
    const [isSubmitting, setIsSubmitting] = useState(false);
 
    const handleSubmitActivity = () => {

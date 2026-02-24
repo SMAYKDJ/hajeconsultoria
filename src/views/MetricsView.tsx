@@ -2,13 +2,14 @@ import React from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Line, ComposedChart } from 'recharts';
 import { ProgressBar } from '../components/ProgressBar';
 import { User } from '../types';
+import { useAuth } from '../contexts/AuthContext';
 
 interface MetricsViewProps {
-   user: User | null;
    onAIAnalysis?: (context: string) => void;
 }
 
-export const MetricsView: React.FC<MetricsViewProps> = ({ user, onAIAnalysis }) => {
+export const MetricsView: React.FC<MetricsViewProps> = ({ onAIAnalysis }) => {
+   const { currentUser: user } = useAuth();
    const isGestor = user?.role === 'GESTOR';
 
    // Dados mockados com predição neural

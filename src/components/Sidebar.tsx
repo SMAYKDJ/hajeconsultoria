@@ -1,17 +1,23 @@
 
 import React from 'react';
-import { ViewType, User } from '../types';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 
 interface SidebarProps {
-  currentView: ViewType;
-  setView: (view: ViewType) => void;
-  user: User | null;
-  onLogout: () => void;
   isOpen?: boolean;
   setIsOpen?: (isOpen: boolean) => void;
 }
 
-export const Sidebar: React.FC<SidebarProps> = ({ currentView, setView, user, onLogout, isOpen, setIsOpen }) => {
+export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
+  const { currentUser: user, handleLogout: onLogout } = useAuth();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const currentView = location.pathname.substring(1) || 'dashboard';
+
+  const setView = (view: string) => {
+    navigate(`/${view}`);
+    if (setIsOpen) setIsOpen(false);
+  };
   const allNavItems = [
     { id: 'dashboard', label: 'Dashboard', icon: 'dashboard', roles: ['ESPECIALISTA', 'GESTOR', 'ALUNO', 'ADM'] },
     { id: 'live-consultancy', label: 'Consultoria Live', icon: 'record_voice_over', badge: 'NOVO', roles: ['ESPECIALISTA', 'ADM'] },
@@ -48,7 +54,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentView, setView, user, on
             {filteredNavItems.map((item) => (
               <button
                 key={item.id}
-                onClick={() => setView(item.id as ViewType)}
+                onClick={() => setView(item.id)}
                 className={`w-full flex items-center space-x-3 p-3.5 rounded-2xl transition-all duration-300 group relative ${currentView === item.id
                   ? 'bg-primary text-white shadow-xl shadow-primary/20'
                   : 'text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-surface-dark'

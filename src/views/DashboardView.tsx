@@ -1,13 +1,14 @@
 import React from 'react';
 import { ViewType } from '../types';
 import { ProgressBar } from '../components/ProgressBar';
+import { useAuth } from '../contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
-interface DashboardProps {
-  setView: (view: ViewType) => void;
-  userXp: number;
-}
+export const DashboardView: React.FC = () => {
+  const { userXp } = useAuth();
+  const navigate = useNavigate();
+  const setView = (view: string) => navigate(`/${view}`);
 
-export const DashboardView: React.FC<DashboardProps> = ({ setView, userXp }) => {
   const stats = [
     { label: 'ROI Estimado', value: '12.4x', trend: '↑ 0.8', trendColor: 'text-green-500' },
     { label: 'Taxa de Retenção', value: '94.2%', trend: 'Estável', trendColor: 'text-blue-500' },
