@@ -1,0 +1,5 @@
+src/views/LiveConsultancyView.tsx(100,31): error TS18048: 'message.serverContent.modelTurn.parts' is possibly 'undefined'.
+src/views/SupportView.tsx(199,25): error TS2339: Property 'isInternal' does not exist on type '{ id: number; user: string; initial: string; text: string; time: string; isCustomer: boolean; isSystem?: undefined; } | { id: number; user: string; initial: string; text: string; time: string; isSystem: boolean; isCustomer?: undefined; }'.
+  Property 'isInternal' does not exist on type '{ id: number; user: string; initial: string; text: string; time: string; isCustomer: boolean; isSystem?: undefined; }'.
+src/views/SupportView.tsx(203,24): error TS2339: Property 'isInternal' does not exist on type '{ id: number; user: string; initial: string; text: string; time: string; isCustomer: boolean; isSystem?: undefined; } | { id: number; user: string; initial: string; text: string; time: string; isSystem: boolean; isCustomer?: undefined; }'.
+  Property 'isInternal' does not exist on type '{ id: number; user: string; initial: string; text: string; time: string; isCustomer: boolean; isSystem?: undefined; }'.

@@ -97,7 +97,7 @@ export const LiveConsultancyView: React.FC = () => {
               setTranscript(prev => [...prev, `AI: ${message.serverContent!.outputTranscription!.text}`].slice(-5));
             }
 
-            const audioData = message.serverContent?.modelTurn?.parts[0]?.inlineData?.data;
+            const audioData = message.serverContent?.modelTurn?.parts?.[0]?.inlineData?.data;
             if (audioData) {
               const ctx = audioContextRef.current!;
               nextStartTimeRef.current = Math.max(nextStartTimeRef.current, ctx.currentTime);
@@ -195,8 +195,8 @@ export const LiveConsultancyView: React.FC = () => {
         onClick={isActive ? stopSession : startSession}
         disabled={isConnecting}
         className={`px-12 py-4 rounded-2xl font-black uppercase tracking-widest transition-all transform active:scale-95 shadow-2xl ${isActive
-            ? 'bg-red-500 text-white hover:bg-red-600'
-            : 'bg-primary text-white hover:bg-orange-600 shadow-primary/30'
+          ? 'bg-red-500 text-white hover:bg-red-600'
+          : 'bg-primary text-white hover:bg-orange-600 shadow-primary/30'
           } ${isConnecting ? 'opacity-50 cursor-wait' : ''}`}
       >
         {isConnecting ? 'Estabelecendo Link...' : isActive ? 'Encerrar Consultoria' : 'Iniciar Oráculo'}

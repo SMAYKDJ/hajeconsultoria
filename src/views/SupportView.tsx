@@ -10,7 +10,16 @@ export const SupportView: React.FC = () => {
   const [messageInput, setMessageInput] = useState('');
   const [isInternalMessage, setIsInternalMessage] = useState(false);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
-  const [messages, setMessages] = useState(INITIAL_CHAT_MESSAGES);
+  const [messages, setMessages] = useState<Array<{
+    id: number;
+    user: string;
+    initial: string;
+    text: string;
+    time: string;
+    isCustomer?: boolean;
+    isSystem?: boolean;
+    isInternal?: boolean;
+  }>>(INITIAL_CHAT_MESSAGES);
 
   // Auto-select first ticket of the tab if current is not in list
   React.useEffect(() => {
