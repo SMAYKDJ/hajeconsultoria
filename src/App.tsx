@@ -13,7 +13,7 @@ import { Layout } from './components/Layout';
 import { useAuth } from './contexts/AuthContext';
 
 const App: React.FC = () => {
-  const { isAuthenticated, handleLogin, handleLogout } = useAuth();
+  const { isAuthenticated, isLoading, handleLogin, handleLogout } = useAuth();
   const [aiContext, setAiContext] = useState<string | null>(null);
   const navigate = useNavigate();
 
@@ -52,6 +52,14 @@ const App: React.FC = () => {
     setAiContext(context);
     navigate('/studio-ia');
   };
+
+  if (isLoading) {
+    return (
+      <div className="flex h-screen w-full items-center justify-center bg-background-light dark:bg-background-dark">
+        <span className="material-icons-round text-primary animate-spin text-4xl">sync</span>
+      </div>
+    );
+  }
 
   if (!isAuthenticated) {
     return <LoginView onLogin={handleLogin} />;

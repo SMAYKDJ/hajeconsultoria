@@ -1,7 +1,8 @@
 
 import React, { useState } from 'react';
 
-import { User, UserRole } from '../types';
+import { supabase } from '../lib/supabase';
+import { User } from '../types';
 
 interface LoginViewProps {
     onLogin: (user: User) => void;
@@ -12,52 +13,23 @@ export const LoginView: React.FC<LoginViewProps> = ({ onLogin }) => {
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
 
-    const handleLogin = (e: React.FormEvent) => {
+    const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
         setLoading(true);
 
-        // Simulação de delay de autenticação
-        setTimeout(() => {
-            if (password !== '123') {
-                alert('Chave de acesso inválida para este usuário demo.');
-                setLoading(false);
-                return;
-            }
+        const { data, error } = await supabase.auth.signInWithPassword({
+            email,
+            password
+        });
 
-            const name = email.split('@')[0].toUpperCase();
-            let role: UserRole = 'ALUNO';
-
-            if (email === 'especialista@haje.com' || email === 'especialista') role = 'ESPECIALISTA';
-            else if (email === 'gestor@haje.com' || email === 'gestor') role = 'GESTOR';
-            else if (email === 'aluno@haje.com' || email === 'aluno') role = 'ALUNO';
-            else if (email === 'adm@haje.com' || email === 'adm') role = 'ADM';
-            else {
-                alert('Usuário não cadastrado na base demo.');
-                setLoading(false);
-                return;
-            }
-
-            onLogin({
-                id: Math.random().toString(36).substr(2, 9),
-                name: name,
-                email: email,
-                role: role,
-                avatar: `https://picsum.photos/seed/${name}/100/100`,
-                level: role === 'ESPECIALISTA' ? 10 : (role === 'ADM' ? 99 : (role === 'GESTOR' ? 5 : 4)),
-                xp: role === 'ESPECIALISTA' ? 50000 : (role === 'ADM' ? 999999 : (role === 'GESTOR' ? 8000 : 3250)),
-                status: 'active',
-                branch: role === 'GESTOR' ? 'Matriz São Paulo' : (role === 'ADM' ? 'Sede Neural' : 'Setor Geral'),
-                registrationDate: '2025-01-15',
-                averageAccessTime: '45min',
-                accessStats: {
-                    daily: 4,
-                    weekly: 28,
-                    monthly: 120
-                },
-                storeId: 'store_001'
-            });
+        if (error) {
+            alert('Falha no login: ' + error.message);
             setLoading(false);
-        }, 1200);
+            return;
+        }
+
+        // We don't necessarily need to call onLogin here because AuthContext handles state via the onAuthStateChange listener
+        // But for completeness, we wait for AuthContext to pick up the state change and unmount LoginView
     };
 
     return (
@@ -106,12 +78,12 @@ export const LoginView: React.FC<LoginViewProps> = ({ onLogin }) => {
 
                         {/* Demo Accounts Quick Login */}
                         <div className="pt-2 pb-4">
-                            <p className="text-[10px] text-center font-black text-slate-400 uppercase tracking-widest mb-3">Contas Demo Rápidas</p>
+                            <p className="text-[10px] text-center font-black text-slate-400 uppercase tracking-widest mb-3">Contas Demo Rápidas (Nuvem)</p>
                             <div className="grid grid-cols-2 gap-2">
-                                <button type="button" onClick={() => { setEmail('aluno@haje.com'); setPassword('123'); }} className="text-xs font-bold py-2 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-lg hover:bg-primary hover:text-white transition-colors">Aluno</button>
-                                <button type="button" onClick={() => { setEmail('gestor@haje.com'); setPassword('123'); }} className="text-xs font-bold py-2 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-lg hover:bg-primary hover:text-white transition-colors">Gestor</button>
-                                <button type="button" onClick={() => { setEmail('especialista@haje.com'); setPassword('123'); }} className="text-xs font-bold py-2 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-lg hover:bg-primary hover:text-white transition-colors">Especialista</button>
-                                <button type="button" onClick={() => { setEmail('adm@haje.com'); setPassword('123'); }} className="text-xs font-bold py-2 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-lg hover:bg-primary hover:text-white transition-colors">ADM</button>
+                                <button type="button" onClick={() => { setEmail('aluno@haje.com'); setPassword('password123'); }} className="text-xs font-bold py-2 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-lg hover:bg-primary hover:text-white transition-colors">Aluno</button>
+                                <button type="button" onClick={() => { setEmail('gestor@haje.com'); setPassword('password123'); }} className="text-xs font-bold py-2 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-lg hover:bg-primary hover:text-white transition-colors">Gestor</button>
+                                <button type="button" onClick={() => { setEmail('especialista@haje.com'); setPassword('password123'); }} className="text-xs font-bold py-2 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-lg hover:bg-primary hover:text-white transition-colors">Especialista (Breve)</button>
+                                <button type="button" onClick={() => { setEmail('adm@haje.com'); setPassword('password123'); }} className="text-xs font-bold py-2 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-lg hover:bg-primary hover:text-white transition-colors">ADM (Breve)</button>
                             </div>
                         </div>
 
