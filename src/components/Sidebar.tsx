@@ -63,11 +63,11 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
                 <span className={`material-icons-round text-xl ${currentView === item.id ? 'text-white' : 'text-slate-400 group-hover:text-primary'}`}>
                   {item.icon}
                 </span>
-                <span className="text-xs uppercase tracking-[0.1em] font-black text-left flex-1">
+                <span className="text-[11px] uppercase tracking-[0.1em] font-black text-left flex-1 truncate pr-2">
                   {item.label}
                 </span>
                 {item.badge && (
-                  <span className={`text-[8px] font-black px-1.5 py-0.5 rounded ${currentView === item.id ? 'bg-white text-primary' : 'bg-primary text-white animate-pulse'}`}>
+                  <span className={`text-[8px] font-black px-1.5 py-0.5 rounded whitespace-nowrap ml-auto ${currentView === item.id ? 'bg-white text-primary' : 'bg-primary text-white animate-pulse'}`}>
                     {item.badge}
                   </span>
                 )}

@@ -57,7 +57,7 @@ export const DashboardView: React.FC = () => {
             className="bg-primary text-white flex-1 sm:flex-none justify-center px-4 py-3 rounded-xl font-black text-xs uppercase tracking-tight shadow-sm hover:bg-orange-600 transition flex items-center space-x-2"
           >
             <span className="material-icons-outlined text-base">analytics</span>
-            <span className="hidden sm:inline">Relatórios</span>
+            <span>Relatórios</span>
           </button>
         </div>
       </div>
