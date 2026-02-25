@@ -2,6 +2,7 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { ProgressBar } from './ProgressBar';
 
 interface SidebarProps {
   isOpen?: boolean;
@@ -83,9 +84,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
                 <span className="text-[10px] font-black text-slate-400 uppercase">Nível {user.level}</span>
                 <span className="text-[10px] font-black text-primary">{user.xp} XP</span>
               </div>
-              <div className="h-1 w-full bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
-                <div className="h-full bg-primary" style={{ width: `${(user.xp % 5000) / 50}%` }}></div>
-              </div>
+              <ProgressBar value={(user.xp % 5000) / 50} height="h-1" animate={true} />
             </div>
           )}
           <button

@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
+import { ProgressBar } from '../components/ProgressBar';
 
 export const RewardsView: React.FC = () => {
   const { userXp, userLevel, addXp } = useAuth();
@@ -50,9 +51,7 @@ export const RewardsView: React.FC = () => {
             <h2 className="text-base font-black uppercase tracking-widest dark:text-white">Escalão Atual: <span className="text-primary">{userLevel}</span></h2>
             <span className="text-sm font-bold text-slate-400 uppercase">{userXp % 5000} / 5000 XP p/ próximo nível</span>
           </div>
-          <div className="h-2 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
-            <div className="h-full bg-primary" style={{ width: `${(userXp % 5000) / 50}%` }}></div>
-          </div>
+          <ProgressBar value={(userXp % 5000) / 50} height="h-2" animate={true} />
         </div>
         <div className="bg-white dark:bg-card-dark p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm flex items-center justify-between">
           <div>

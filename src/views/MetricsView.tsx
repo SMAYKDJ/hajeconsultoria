@@ -183,8 +183,8 @@ export const MetricsView: React.FC<MetricsViewProps> = ({ onAIAnalysis }) => {
                                  </td>
                                  <td className="px-6 py-4 min-w-[150px]">
                                     <div className="flex items-center gap-2">
-                                       <div className="flex-1 h-1.5 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
-                                          <div className="h-full bg-primary" style={{ width: `${emp.progress}%` }} />
+                                       <div className="flex-1">
+                                          <ProgressBar value={emp.progress} height="h-1.5" animate={true} />
                                        </div>
                                        <span className="text-[10px] font-black text-slate-500">{emp.progress}%</span>
                                     </div>
