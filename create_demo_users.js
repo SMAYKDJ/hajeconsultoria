@@ -6,14 +6,11 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 
 async function main() {
     const users = [
-        { email: 'aluno@haje.com', password: 'password123', meta: { name: 'ALUNO', role: 'ALUNO', level: 4, xp: 3250 } },
-        { email: 'gestor@haje.com', password: 'password123', meta: { name: 'GESTOR', role: 'GESTOR', level: 5, xp: 8000, branch: 'Matriz São Paulo' } },
-        { email: 'especialista@haje.com', password: 'password123', meta: { name: 'ESPECIALISTA', role: 'ESPECIALISTA', level: 10, xp: 50000 } },
-        { email: 'adm@haje.com', password: 'password123', meta: { name: 'ADM', role: 'ADM', level: 99, xp: 999999, branch: 'Sede Neural' } }
+        { email: 'especialistahaje@haje.com', password: 'password123', meta: { name: 'ESPECIALISTA', role: 'ESPECIALISTA', level: 10, xp: 50000, branch: 'Consultoria Live', store_id: 'store_001' } },
+        { email: 'admhaje@haje.com', password: 'password123', meta: { name: 'ADM', role: 'ADM', level: 99, xp: 999999, branch: 'Sede Neural', store_id: 'store_001' } }
     ];
 
     for (const u of users) {
-        // Sign up creates the user. If they already exist, it will just fail or return an error
         const { data, error } = await supabase.auth.signUp({
             email: u.email,
             password: u.password,

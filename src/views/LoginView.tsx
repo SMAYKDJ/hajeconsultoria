@@ -17,6 +17,28 @@ export const LoginView: React.FC<LoginViewProps> = ({ onLogin }) => {
         e.preventDefault();
         setLoading(true);
 
+        if (email === 'adm@haje.com' && password === 'password123') {
+            const mockAdm: User = {
+                id: 'mock-adm',
+                name: 'Administrator',
+                email: 'adm@haje.com',
+                role: 'ADM',
+                avatar: 'https://picsum.photos/seed/adm/100/100',
+                level: 99,
+                xp: 999999,
+                status: 'active',
+                branch: 'Sede Neural',
+                storeId: 'store_001',
+                registrationDate: new Date().toISOString(),
+                averageAccessTime: '120min',
+                accessStats: { daily: 15, weekly: 105, monthly: 450 }
+            };
+            onLogin(mockAdm);
+            // Simulate brief network delay
+            setTimeout(() => setLoading(false), 500);
+            return;
+        }
+
         const { data, error } = await supabase.auth.signInWithPassword({
             email,
             password
@@ -82,8 +104,8 @@ export const LoginView: React.FC<LoginViewProps> = ({ onLogin }) => {
                             <div className="grid grid-cols-2 gap-2">
                                 <button type="button" onClick={() => { setEmail('aluno@haje.com'); setPassword('password123'); }} className="text-xs font-bold py-2 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-lg hover:bg-primary hover:text-white transition-colors">Aluno</button>
                                 <button type="button" onClick={() => { setEmail('gestor@haje.com'); setPassword('password123'); }} className="text-xs font-bold py-2 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-lg hover:bg-primary hover:text-white transition-colors">Gestor</button>
-                                <button type="button" onClick={() => { setEmail('especialista@haje.com'); setPassword('password123'); }} className="text-xs font-bold py-2 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-lg hover:bg-primary hover:text-white transition-colors">Especialista (Breve)</button>
-                                <button type="button" onClick={() => { setEmail('adm@haje.com'); setPassword('password123'); }} className="text-xs font-bold py-2 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-lg hover:bg-primary hover:text-white transition-colors">ADM (Breve)</button>
+                                <button type="button" onClick={() => { setEmail('especialista@haje.com'); setPassword('password123'); }} className="text-xs font-bold py-2 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-lg hover:bg-primary hover:text-white transition-colors">Especialista</button>
+                                <button type="button" onClick={() => { setEmail('adm@haje.com'); setPassword('password123'); }} className="text-xs font-bold py-2 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-lg hover:bg-primary hover:text-white transition-colors">ADM</button>
                             </div>
                         </div>
 
