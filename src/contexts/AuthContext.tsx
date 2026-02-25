@@ -57,10 +57,38 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         }
     };
 
+    const setProfileFromSession = (sessionUser: any) => {
+        // Fallback or immediate state from auth metadata to avoid blocking render
+        const meta = sessionUser.user_metadata || {};
+        const tempUser: User = {
+            id: sessionUser.id,
+            name: meta.name || sessionUser.email?.split('@')[0] || 'Usuário',
+            email: sessionUser.email || '',
+            role: (meta.role as any) || 'ALUNO',
+            avatar: meta.avatar || `https://picsum.photos/seed/${sessionUser.id}/100/100`,
+            level: meta.level || 1,
+            xp: meta.xp || 0,
+            status: 'active',
+            branch: meta.branch || 'Matriz',
+            storeId: meta.store_id || 'store_001',
+            registrationDate: sessionUser.created_at,
+            averageAccessTime: '45min',
+            accessStats: { daily: 4, weekly: 28, monthly: 120 }
+        };
+        setCurrentUser(tempUser);
+        setUserXp(tempUser.xp);
+        setUserLevel(tempUser.level);
+        setIsAuthenticated(true);
+        setIsLoading(false);
+
+        // Fetch fresh db data in background
+        fetchUserProfile(sessionUser.id);
+    };
+
     useEffect(() => {
         supabase.auth.getSession().then(({ data: { session } }) => {
             if (session?.user) {
-                fetchUserProfile(session.user.id).then(() => setIsLoading(false));
+                setProfileFromSession(session.user);
             } else {
                 setIsLoading(false);
             }
@@ -68,10 +96,11 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
         const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
             if (session?.user) {
-                await fetchUserProfile(session.user.id);
+                setProfileFromSession(session.user);
             } else {
                 setIsAuthenticated(false);
                 setCurrentUser(null);
+                setIsLoading(false);
             }
         });
 
