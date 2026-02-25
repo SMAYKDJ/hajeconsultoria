@@ -65,11 +65,11 @@ export const DashboardView: React.FC = () => {
       {/* Grid de Estatísticas */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
         {stats.map((stat, idx) => (
-          <div key={idx} className={`bg-white dark:bg-card-dark p-4 rounded-2xl border ${stat.alert ? 'border-red-500/30 bg-red-50/5' : 'border-slate-200 dark:border-slate-800'} shadow-sm`}>
-            <p className="text-xs font-black text-slate-400 uppercase tracking-widest mb-1">{stat.label}</p>
-            <div className="flex items-baseline space-x-2">
-              <span className={`text-2xl font-display font-black ${stat.alert ? 'text-red-500' : 'text-slate-900 dark:text-white'}`}>{stat.value}</span>
-              <span className="text-xs font-bold text-slate-400">{stat.trend}</span>
+          <div key={idx} className={`bg-white dark:bg-card-dark p-4 rounded-2xl border ${stat.alert ? 'border-red-500/30 bg-red-50/5' : 'border-slate-200 dark:border-slate-800'} shadow-sm overflow-hidden flex flex-col justify-between`}>
+            <p className="text-[10px] xl:text-xs font-black text-slate-400 uppercase tracking-widest mb-1 leading-tight break-words">{stat.label}</p>
+            <div className="flex flex-wrap items-baseline gap-x-1.5 gap-y-0.5 mt-auto">
+              <span className={`text-xl xl:text-2xl font-display font-black truncate max-w-full ${stat.alert ? 'text-red-500' : 'text-slate-900 dark:text-white'}`}>{stat.value}</span>
+              <span className="text-[10px] xl:text-xs font-bold text-slate-400 truncate max-w-full">{stat.trend}</span>
             </div>
           </div>
         ))}
